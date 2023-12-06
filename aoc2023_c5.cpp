@@ -136,7 +136,6 @@ long day5Part2(){
     // Get Seed Numbers
     if (getline(std::cin, line)){
         line = line.substr(6, line.length()-6);
-        //std::printf("%s\n", line.c_str());
         std::stringstream seedStream(line);
         std::string n;
         long seedSource = -1;
@@ -164,13 +163,6 @@ long day5Part2(){
             
         }
     }
-    //Test print
-    //
-    for (int i=0; i<currNums.size();i++){
-        printf("%ld, %ld|", currNums[i].sourceStart, currNums[i].rangeLen);
-    }
-    printf("\n");
-    //
     
     int mapNum = -1;
     while(getline(std::cin, line))
@@ -210,16 +202,7 @@ long day5Part2(){
             mapNum++;
         }
     }
-    
-    // check if maps are correct?
-    /*
-    for (int i=0; i < numMaps; i++){
-        std::vector<coolMap>* mapToCheck = Maps[i];
-        int len = mapToCheck->size();
-        coolMap last = mapToCheck->at(len-1);
-        printf("%ld, %ld, %ld\n", last.sourceStart,last.destStart, last.rangeLen);
-    }*/
-    
+
     // go through each of the maps
     for (int i=0; i< numMaps; i++){
         printf("newMap\n");
@@ -260,12 +243,12 @@ long day5Part2(){
                 if (!didNotFindAny && !notFoundStarts.empty()){
                     // If notFoundStarts and notFoundRanges still have stuff, need to check those as well
                     int origSize = notFoundStarts.size();
-                    printf("checking ");
+                    /*printf("checking ");
                     for (int i=0; i< origSize; i++){
                         printf("%ld ",notFoundStarts[i]);
                         printf("%ld |",notFoundRanges[i]);
                     }
-                    printf("\n");
+                    printf("\n");*/
                     for (int notFoundIdx = 0; notFoundIdx < origSize; notFoundIdx++)
                     {
                         if (currMapping.findDestGivenRanges(notFoundStarts[notFoundIdx], 
@@ -282,22 +265,12 @@ long day5Part2(){
                         //printf("%d\n", notFoundIdx, notFoundStarts.size());
                     }
                     if (!idxToRemove.empty()){
-                        printf("before: ");
-                        for (int i=0; i< notFoundStarts.size(); i++){
-                            printf("%ld ",notFoundStarts[i]);
-                        }
-                        printf("\n");
                         for (int i = idxToRemove.size()-1; i>=0; i--)
                         {
                             printf("removing %d ", idxToRemove[i]);
                             notFoundStarts.erase(notFoundStarts.begin() + idxToRemove[i]);
                             notFoundRanges.erase(notFoundRanges.begin() + idxToRemove[i]);
                         }
-                        printf("\nafter: ");
-                        for (int i=0; i< notFoundStarts.size(); i++){
-                            printf("%ld ",notFoundStarts[i]);
-                        }
-                        printf("\n");
                     }
                     
                 }
@@ -308,21 +281,18 @@ long day5Part2(){
             else{
                 for (int notFoundIdx = 0; notFoundIdx< notFoundStarts.size(); notFoundIdx++)
                 {
-                    printf("%ld %ld\n", notFoundStarts[i], notFoundRanges[i]);
-                    coolMap notFoundVal(notFoundStarts[i], notFoundRanges[i]);
+                    coolMap notFoundVal(notFoundStarts[notFoundIdx], notFoundRanges[notFoundIdx]);
                     nextNums.push_back(notFoundVal);
                 }
             }
-            //printf("%d:%ld, %ld| ", j, nextNums[j].sourceStart, nextNums[j].rangeLen);
         }
-        
+        /*
         for (int i=0; i< nextNums.size(); i++)
         {
             printf("|%ld to %ld|", nextNums[i].sourceStart, nextNums[i].sourceStart+nextNums[i].rangeLen);
         }
-        printf("\n");
+        printf("\n");*/
         currNums = nextNums;
-        //printf("\n");
     }
     
     long lowestLoc = currNums[0].sourceStart;
