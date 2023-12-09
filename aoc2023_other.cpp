@@ -27,7 +27,12 @@ void LineToNumVectBySpaces (std::string line, std::vector < int >&vec)
         // store token string in the vector
         if (!t.empty ())
 	    {
-	        int actualNum = getNumFromString(t);
+	        int sign = 1;
+	        if (t[0] == '-')
+	        {
+	            sign = -1;
+	        }
+	        int actualNum = getNumFromString(t) * sign;
 	        vec.push_back (actualNum);
 	    }
     }
